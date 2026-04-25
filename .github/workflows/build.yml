@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches: [ "master", "main" ]
-  workflow_dispatch:  # يسمح بتشغيل يدوي من واجهة GitHub
+  workflow_dispatch:
 
 jobs:
   android:
@@ -19,9 +19,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build APK (مع تحديد حجم ذاكرة JVM مباشرة)
+      - name: Build APK
         run: ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs=-Xmx2048m
-        # -Dorg.gradle.jvmargs يضمن تمرير معامل الذاكرة مباشرة لـ Gradle، متجاوزاً أي إعدادات خاطئة
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
