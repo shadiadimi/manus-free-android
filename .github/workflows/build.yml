@@ -1,5 +1,6 @@
 name: Build
 on: [push, workflow_dispatch]
+
 jobs:
   android:
     runs-on: ubuntu-latest
@@ -10,8 +11,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build APK
-        run: bash gradlew assembleDebug --no-daemon
-      - name: Upload
+        run: ./gradlew assembleDebug --no-daemon
+        env:
+          JAVA_OPTS: ""  # منع أي خيارات خاطئة من الوالدين
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
