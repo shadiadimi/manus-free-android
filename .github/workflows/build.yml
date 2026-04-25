@@ -1,19 +1,28 @@
 name: Build
-on: [push, workflow_dispatch]
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch:  # يسمح بتشغيل يدوي من واجهة GitHub
 
 jobs:
   android:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build APK
-        run: ./gradlew assembleDebug --no-daemon
-        env:
-          JAVA_OPTS: ""  # منع أي خيارات خاطئة من الوالدين
+
+      - name: Build APK (مع تحديد حجم ذاكرة JVM مباشرة)
+        run: ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs=-Xmx2048m
+        # -Dorg.gradle.jvmargs يضمن تمرير معامل الذاكرة مباشرة لـ Gradle، متجاوزاً أي إعدادات خاطئة
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
