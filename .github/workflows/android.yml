@@ -1,8 +1,0 @@
-# Clone repository
-git clone https://github.com/YOUR_USERNAME/manus-free-android.git
-cd manus-free-android
-
-# Build APK
-./gradlew assembleDebug
-
-# APK will be in: app/build/outputs/apk/debug/app-debug.apk
