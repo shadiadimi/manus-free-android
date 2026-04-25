@@ -20,12 +20,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build APK
-        run: |
-          unset JAVA_OPTS
-          unset _JAVA_OPTIONS
-          unset GRADLE_OPTS
-          unset JAVA_TOOL_OPTIONS
-          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs=-Xmx2048m
+  run: |
+    export DEFAULT_JVM_OPTS='-Xmx2048m -Xms256m'
+    ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
